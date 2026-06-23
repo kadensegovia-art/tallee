@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Tally — Calorie Diary</title>
+<meta name="theme-color" content="#F9F8F6" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Tally" />
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAC8klEQVR42u3dQY6MQRzG4arKREJipc8xInEC9raSERtbC3ESp9DHcAIbfY6esLbosSfDTPenv6q3nmdJjPHNz5t/a6GWDuyvLm8Kw9tsd3Xtz6EKmKTAq4hJiruKmKS4q5BJCruJmaQ/DKhCJmmtm5hJWusqZJLWuomZpLVuYiYp6iZmkqJuYiYp6iZmkqJuYiYp6iZmkqJuHhNJmnUmaaWbmEmK2slB/slhnRl1pZuYSYrayUHuyWGdGX2lLTT5Lwph+KCdGyScHRYaJwd0HbRzg5Szw0Lj5ABBwxlU9zMWGgQNggZBI2gQNAgaBA2CZkIXib+oh6/elUevP/jq/sX39y/L4cfeQoOgQdAgaAQNggZBg6BB0AgaBA2CBkGDoJmOf2jmBA+evyiPP35a7gMeDuX67TMP1kKDoBE0CBoEDYJG0B4BggZBg6BB0AgaBA2CBkGDoBE0CBoEDYIGQSNoEDQIGgQNgkbQIGgQNAgaBI2gQdAgaBA0CBpBg6BB0CBoEDSCBkGDoEHQCBoEDYIGQYOgmdSFR5Dlyedvf3zb9Zungmb8kH//vhnCFnRwyDOG7YaeJOYlfpygQdCcY2VTV1rQCJqx1zl5pQWNoEHQIGgQdLyl3ulLfMfQW98n+Pn1y1R/8cdC0+1Kp/5GFDSCZuyVTj6T6v7q8kYa47vLu34z3PuCniDsmV64Cho3NAgaBA2CRtAgaBA0CBoEjaBB0CBoEDQIGkGDoEHQIGi4PejNdlc9BhJstrtqoXFygKDhXEG7o0m4ny00Tg4YImhnB6OfGxYaJwcME7Szg5HPDQtN/slhpRl1nW9daFEzYsxODvJPDivNqOv8z4UWNSPF7ORgnpPDSjPaOt95oUXNCDHf6+QQNb3HfO8bWtT0HPNRLwpFTa8xHxW0qOk15qODFjU9xlxKKYtE6f8LZ+2QT15oa01vMS+20NaaXsaw9f4JIuZVF9pas+bonW1NxS3ic/w8q5wH4hZxVNACF/D/8guSm/fHoVZPfQAAAABJRU5ErkJggg==" />
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVGFsbHkgXHUyMDE0IENhbG9yaWUgRGlhcnkiLCJzaG9ydF9uYW1lIjoiVGFsbHkiLCJzdGFydF91cmwiOiIuIiwic2NvcGUiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0Y5RjhGNiIsInRoZW1lX2NvbG9yIjoiI0Y5RjhGNiIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQVlBQUFCUzNHd0hBQUFDTGtsRVFWUjQydTNic1dyQ1VCU0E0WlBpSURqMlBlTG1DN2gwTGs3Umd2Z08wc2twNzVHdEQ5UUg2Tll4bGk0T0lpWHVnb0kwaGVyNXZqVkJ5UFg4M2d6WG9xM0tMaUNwQjB1QUFFQUFJQUFRQUFnQUJBQUNBQUdBQUVBQUlBQVFBQWdBQkFBQ0FBR0FBRUFBSUFBUUFBZ0FCQUFDQUFHQUFFQUFJQUFRQUFnQUJBQUNBQUdBQUVBQUlBQVFBQWdBQkFBQ0FBR0FBRUFBSUFBUUFBZ0FMaGhrZU1qaDB5SkdMMnZmOWhWK1BqL2krL1haRGdBQ0FBR0FBRUFBSUFBUUFBZ0FCQUFDQUFHQUFFQUFJQUFRQVB4UFJWdVZuV1hvMTJpMWllRjAxdnZuZmkwbjBSMzJGdGdPQUFJQUFZQUFRQUFnQUJBQUNBQUVBQUlBQVlBQVFBQWdBQkFBQ0FBQmdBQkFBQ0FBRUFBSUFBUUFBZ0FCZ0FCQUFDQUFFQUFJQUFRQUFnQUJnQUJBQUNBQUVBQUlBQVFBQWdBQmdBQkFBQ0FBRUFBSUFBUUFBZ0FCZ0FCQUFDQUE2TTNBRXVUeCtQWis5dHAyUGhZQStRYi85SjVzSVhnRk12eS91bDhBM00zd1o0eEFBSVkvZFFRQ01QeXBJeEFBcVFuQXIzL3FYVUFBMkFGQUFDQUFFQUFJQUFUQXplbjdNTnU5SDQ1ekd2UVA3Sm82ZGsxdElld0EzUEl1a09Gb3RBQkVrSGI0QlNDQzFNTXZBQkdrSHY2SWlLS3R5czZZNU9BL3dRSUFyMEFnQUJBQUFnQUJnQUJBQUNBQUVBQUlBQVFBQWdBQmdBQkFBQ0FBRUFBSUFBUUFBZ0FCZ0FCQUFDQUFFQUFJQUFRQUFnQUJnQUJBQUNBQUVBQUlBQVFBQWdBQmdBQkFBQ0FBRUFBSUFBUUFBZ0FCZ0FCQUFDQUFFQUFJQUFRQUFnQUJnQUFnam12NVJBYVdZQXdnQUFBQUFFbEZUa1N1UW1DQyIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9wbmciLCJwdXJwb3NlIjoiYW55IG1hc2thYmxlIn0seyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQVlBQUFEMGVOVDZBQUFINDBsRVFWUjQydTNicjA3RFVCakc0UlpxUUpITTRiaUI3bDdBZFFJTGw0R0Z5eUQxU0M2RFdReHVxaE1JRWdTa0dQeEd3cmJtdk0raitiZER3dmY3VGxrOWRPMVlBUUJSamh3QkFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUNBQUFBQUJBQUFJQUFCQUFBQUFBZ0FBRUFBQWdBQUFBQVFBQUNBQUFBQUJBQUFJQUFCQUFBQUFBZ0FBRUFBQWdBQUFBQVFBQUNBQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBQjRBZ0FRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBRUFBQWdBQUtCY2pTTmcxMDZ2YnF1VHl4c0hBWC93OWZwU3ZkOWRPd2pjQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUVBQU9BSUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBSUFBQVFBQUFBQUlBQUNoWFBYVHQ2QmpnOEk3UEw2cXpoNmZpWCtmbmMxOTlQTjc3aFlNYkFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBUUFBQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFCQUFBQUFBZ0FBRUFBQWdBQUFBQVFBQUNBQUFBQUJBQUFJQUFCQUFBQUFBZ0FBRUFBQWdBQUFBQVFBQUNBQUFBQUJBQUFJQUFCQUFBQUFBZ0FBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBSUFBQVFBQUFBQUlBQUJBQUFJQUFBQUFFQUFBZ0FBQUFBUUFBQ0FBQVFBQUFBQUlBQUJBQUFNQU9OWTRBWUR1emZybjF4NjRYY3dlR0FBQW9mZUJ2K2x4QmdBQUFLSGp3Yi9xYVFnQUJBQkF3K0lVQUFnQWdlUEFMQWFiR3V3QUF3ei80K3lNQUFBeC9FVUFRandBQWczOUNQNU5IQXJnQkFBamN0dDBHSUFBQVFvZXJDRUFBQUFBQ0FDQmxxM1lMZ0FBQUNCMm1JZ0FCQUJBNlJFVUFBZ0FBRUFBQUtkdXpXd0FFQUFBZ0FBQlN0bWEzQUFnQUFFQUFBS1JzeTI0QkVBQUFnQUFBQUFRQUFDQUFnQ1NsUHlmM2Z3QUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQTRzUFZpN3ZXQkFBQUFCQUFBSUFBQVFBQUFGS0xVNStTZS8vT2ZHa2NBMC9DOWV2TUhIbkFEQUdCYnR2MGpBQUFBQVFDUXN6WGIvaEVBQUlBQUFDaDllN2I5SXdBQXdvYW80WThBQUFnYnBvWS9BZ0FBRUFBQXBXL1Z0bjhFQUVEWWNEWDgyWmQ2Nk5yUk1RQ0padjNTNE1jTkFJRGJBTU1mQVFBZ0FneC9DdVlSQU1DdmZUNFNNUGdSQUFCQklXRHdJd0FBZ2tMQTRFY0FBQVFFZ1lHUEFBQUFKc2U3QUFCQUFBQUFBZ0FBRUFBQWdBQUFBQVFBQUNBQUFBQUJBQUFJQUFCQUFBQUFBZ0FBRUFBQWdBQUFBQVFBQUNBQUFBQUJBQUFJQUFCQUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQkFBQUlBQUFBQUVBQUFnQUFFQUFBQUFDQUFBUUFBQ0FBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUNBQUFRQUFBQUFJQUFCQUFBSUFBQUFBRUFBQWdBQUFBQVFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFFQUFBZ0FBQUFBUUFBQ0FBQUFBQkFBQUlBQUJBQUFBQUFnQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBSUFBQUFBRUFBQWdBQUVBQUFBQUNBQUFRQUFDQUFBQUFCQUFBSUFBQVFBQUFBQUlBQUJBQUFJQUFBQUFFQUFBZ0FBQUFBUUFBQ0FBQVFBQUFBQUlBQUJBQUFJQUFBQUFFQUFBZ0FBQUFBUUFBQ0FBQVFBQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQWdBQUVBQUFnQUFBQUFRQUFDQUFBQUFCQUFBSUFBQkFBQUFBQWdBQUVBQUFnQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBZ0FBRUFBQUFBQ0FBQVFBQUNBQUFBQUJBQUFJQUFBQUFFQUFBSUFBQkFBQUlBQUFBQUVBQUFnQUFBQUFRQUFDQUFBWUlKK0FDek5rb2ZnUk9sYUFBQUFBRWxGVGtTdVFtQ0MiLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<style>
+  :root{
+    --bg:#F9F8F6; --surface:#FFFFFF; --ink:#17150F; --muted:#968F84;
+    --line:#ECE8E1; --accent:#EC5A2E; --accent-soft:#FCEDE7; --accent-ink:#B23E18;
+    --radius:16px; --shadow:0 1px 2px rgba(23,21,15,.04),0 8px 24px rgba(23,21,15,.06);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:Inter,system-ui,-apple-system,sans-serif;
+    background:var(--bg); color:var(--ink);
+    -webkit-font-smoothing:antialiased; overscroll-behavior-y:none;
+  }
+  .app{max-width:480px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; position:relative;}
+
+  /* Header / date nav */
+  header{
+    position:sticky; top:0; z-index:20; background:rgba(249,248,246,.86);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px 12px;
+  }
+  .brand{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:18px; letter-spacing:-.02em;}
+  .brand span{color:var(--accent);}
+  .datenav{display:flex; align-items:center; gap:6px;}
+  .datebtn{
+    width:34px; height:34px; border:1px solid var(--line); background:var(--surface);
+    border-radius:10px; display:grid; place-items:center; cursor:pointer; color:var(--ink);
+    font-size:18px; line-height:1;
+  }
+  .datebtn:active{transform:scale(.94);}
+  .datelabel{min-width:122px; text-align:center; font-weight:600; font-size:14px;}
+  .datelabel small{display:block; color:var(--muted); font-weight:500; font-size:11px; margin-top:1px;}
+  .icon-btn{
+    width:36px;height:36px;border:1px solid var(--line);background:var(--surface);border-radius:10px;
+    display:grid;place-items:center;cursor:pointer;color:var(--ink);
+  }
+  .icon-btn:active{transform:scale(.94);}
+
+  main{flex:1; padding:16px 16px 120px;}
+
+  /* Hero total */
+  .total{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px 20px 20px; text-align:center; box-shadow:var(--shadow); margin-bottom:18px;
+  }
+  .total .num{
+    font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+    font-size:64px; line-height:.95; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
+  }
+  .total .unit{color:var(--muted); font-size:13px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; margin-top:8px;}
+  .bar{height:8px; background:var(--line); border-radius:99px; margin-top:16px; overflow:hidden; display:none;}
+  .bar > i{display:block; height:100%; background:var(--accent); border-radius:99px; transition:width .35s ease;}
+  .barlabel{display:none; justify-content:space-between; font-size:12px; color:var(--muted); margin-top:8px; font-weight:500;}
+  .barlabel b{color:var(--ink); font-variant-numeric:tabular-nums;}
+  .show{display:flex;}
+  .show.bar{display:block;}
+
+  /* Meals */
+  .meal{margin-bottom:14px;}
+  .meal-head{display:flex; align-items:baseline; justify-content:space-between; padding:0 4px 8px;}
+  .meal-name{font-weight:700; font-size:14px; letter-spacing:-.01em;}
+  .meal-sum{font-size:13px; color:var(--muted); font-weight:600; font-variant-numeric:tabular-nums;}
+  .items{background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+  .item{display:flex; align-items:center; gap:12px; padding:12px 14px; border-bottom:1px solid var(--line);}
+  .item:last-child{border-bottom:none;}
+  .item .info{flex:1; min-width:0;}
+  .item .nm{font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .item .br{font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .item .kc{font-weight:600; font-size:14px; font-variant-numeric:tabular-nums;}
+  .item .del{
+    border:none; background:transparent; color:var(--muted); cursor:pointer; font-size:18px;
+    width:28px; height:28px; border-radius:8px; display:grid; place-items:center;
+  }
+  .item .del:active{background:var(--accent-soft); color:var(--accent-ink);}
+  .empty-meal{padding:14px; color:var(--muted); font-size:13px; text-align:center;}
+
+  .empty-day{text-align:center; color:var(--muted); padding:40px 20px;}
+  .empty-day .big{font-family:'Bricolage Grotesque',sans-serif; font-size:20px; color:var(--ink); font-weight:600; margin-bottom:6px;}
+
+  /* Add bar */
+  .addbar{
+    position:fixed; left:0; right:0; bottom:0; z-index:25;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(249,248,246,0),rgba(249,248,246,.95) 30%);
+    max-width:480px; margin:0 auto;
+  }
+  .add{
+    width:100%; border:none; background:var(--accent); color:#fff; font-family:inherit;
+    font-weight:700; font-size:16px; padding:15px; border-radius:14px; cursor:pointer;
+    box-shadow:0 6px 18px rgba(236,90,46,.32); display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .add:active{transform:scale(.985);}
+
+  /* Sheet */
+  .scrim{position:fixed; inset:0; background:rgba(23,21,15,.4); opacity:0; pointer-events:none; transition:opacity .25s; z-index:40;}
+  .scrim.open{opacity:1; pointer-events:auto;}
+  .sheet{
+    position:fixed; left:0; right:0; bottom:0; z-index:50; max-width:480px; margin:0 auto;
+    background:var(--bg); border-radius:22px 22px 0 0; box-shadow:0 -8px 40px rgba(23,21,15,.18);
+    transform:translateY(100%); transition:transform .3s cubic-bezier(.32,.72,0,1);
+    max-height:90vh; display:flex; flex-direction:column;
+  }
+  .sheet.open{transform:translateY(0);}
+  .grip{width:38px; height:4px; background:var(--line); border-radius:99px; margin:10px auto 4px;}
+  .sheet-head{display:flex; align-items:center; justify-content:space-between; padding:6px 18px 10px;}
+  .sheet-title{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:18px;}
+  .close{border:none; background:var(--surface); border:1px solid var(--line); width:32px; height:32px; border-radius:9px; font-size:16px; cursor:pointer; color:var(--ink);}
+  .tabs{display:flex; gap:6px; padding:0 18px 12px;}
+  .tab{
+    flex:1; border:1px solid var(--line); background:var(--surface); padding:9px; border-radius:11px;
+    font-family:inherit; font-weight:600; font-size:13px; cursor:pointer; color:var(--muted); display:flex; flex-direction:column; align-items:center; gap:3px;
+  }
+  .tab svg{width:18px;height:18px;}
+  .tab.active{background:var(--accent-soft); color:var(--accent-ink); border-color:var(--accent-soft);}
+  .sheet-body{padding:0 18px 22px; overflow-y:auto; flex:1; -webkit-overflow-scrolling:touch;}
+
+  .field{width:100%; border:1px solid var(--line); background:var(--surface); border-radius:12px; padding:13px 14px; font-family:inherit; font-size:15px; color:var(--ink);}
+  .field:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:transparent;}
+  .row{display:flex; gap:10px;}
+  .label{font-size:12px; font-weight:600; color:var(--muted); margin:14px 4px 6px; display:block; text-transform:uppercase; letter-spacing:.03em;}
+
+  .results{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
+  .res{
+    display:flex; align-items:center; gap:12px; text-align:left; width:100%;
+    background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; cursor:pointer; font-family:inherit;
+  }
+  .res:active{border-color:var(--accent); background:var(--accent-soft);}
+  .res .info{flex:1; min-width:0;}
+  .res .nm{font-size:14px; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .res .meta{font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .res .kc{font-weight:700; font-size:14px; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .res .kc small{display:block; font-weight:500; color:var(--muted); font-size:10px; text-align:right;}
+
+  .hint{color:var(--muted); font-size:13px; text-align:center; padding:24px 10px; line-height:1.5;}
+  .spin{display:inline-block; width:18px; height:18px; border:2px solid var(--line); border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite; vertical-align:middle;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+  .chip{border:1px solid var(--line); background:var(--surface); border-radius:99px; padding:8px 13px; font-family:inherit; font-size:13px; font-weight:500; cursor:pointer; color:var(--ink);}
+  .chip:active{background:var(--accent-soft); border-color:var(--accent-soft);}
+  .chip b{font-variant-numeric:tabular-nums; color:var(--muted); font-weight:600; margin-left:4px;}
+
+  #reader{width:100%; border-radius:12px; overflow:hidden; margin-top:8px;}
+  #reader video{border-radius:12px;}
+
+  .mealpick{display:flex; gap:6px; margin-top:6px;}
+  .mealpick button{flex:1; border:1px solid var(--line); background:var(--surface); padding:9px 4px; border-radius:10px; font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; color:var(--muted);}
+  .mealpick button.on{background:var(--accent-soft); color:var(--accent-ink); border-color:var(--accent-soft);}
+
+  .primary{
+    width:100%; border:none; background:var(--accent); color:#fff; font-family:inherit; font-weight:700;
+    font-size:16px; padding:14px; border-radius:13px; cursor:pointer; margin-top:18px;
+  }
+  .primary:active{transform:scale(.99);}
+  .ghost{width:100%; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-family:inherit; font-weight:600; font-size:14px; padding:12px; border-radius:12px; cursor:pointer; margin-top:10px;}
+
+  /* Portion panel */
+  .portion{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px; margin-top:14px;}
+  .portion .pnm{font-weight:700; font-size:15px; margin-bottom:2px;}
+  .portion .pbr{font-size:12px; color:var(--muted); margin-bottom:14px;}
+  .calc{display:flex; align-items:baseline; justify-content:center; gap:6px; margin:16px 0 4px;}
+  .calc .v{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:40px; font-variant-numeric:tabular-nums;}
+  .calc .u{color:var(--muted); font-size:13px; font-weight:600;}
+
+  .toast{
+    position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(20px); z-index:60;
+    background:var(--ink); color:#fff; padding:11px 18px; border-radius:99px; font-size:14px; font-weight:600;
+    opacity:0; transition:opacity .25s,transform .25s; pointer-events:none; white-space:nowrap;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none !important; animation:none !important;}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">Tally<span>.</span></div>
+    <div class="datenav">
+      <button class="datebtn" id="prev" aria-label="Previous day">‹</button>
+      <div class="datelabel" id="datelabel">Today</div>
+      <button class="datebtn" id="next" aria-label="Next day">›</button>
+    </div>
+    <button class="icon-btn" id="settingsBtn" aria-label="Set daily target">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <div class="total">
+      <div class="num" id="totalNum">0</div>
+      <div class="unit">calories logged</div>
+      <div class="bar" id="bar"><i id="barFill" style="width:0%"></i></div>
+      <div class="barlabel" id="barLabel"><span>Target</span><span><b id="barLeft">0</b> left</span></div>
+    </div>
+    <div id="meals"></div>
+  </main>
+
+  <div class="addbar">
+    <button class="add" id="addBtn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      Add food
+    </button>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- Add sheet -->
+<div class="sheet" id="sheet">
+  <div class="grip"></div>
+  <div class="sheet-head">
+    <div class="sheet-title">Add food</div>
+    <button class="close" id="closeSheet" aria-label="Close">✕</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>Search</button>
+    <button class="tab" data-tab="scan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 8v8M11 8v8M15 8v8"/></svg>Scan</button>
+    <button class="tab" data-tab="quick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>Quick</button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<!-- Settings sheet -->
+<div class="sheet" id="settingsSheet">
+  <div class="grip"></div>
+  <div class="sheet-head">
+    <div class="sheet-title">Daily target</div>
+    <button class="close" id="closeSettings" aria-label="Close">✕</button>
+  </div>
+  <div class="sheet-body">
+    <p class="hint" style="padding:6px 4px 0; text-align:left;">Optional. Set a daily calorie number to show a progress bar, or leave it blank to just track totals.</p>
+    <label class="label">Calories per day</label>
+    <input class="field" id="targetInput" type="number" inputmode="numeric" placeholder="e.g. 2000" />
+    <button class="primary" id="saveTarget">Save target</button>
+    <button class="ghost" id="clearTarget">Remove target</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ---------- storage: uses Claude storage inside the chat, localStorage once hosted on your phone ---------- */
+const hasClaudeStore = (typeof window!=="undefined" && window.storage && typeof window.storage.get==="function");
+const store = {
+  async get(k){
+    if(hasClaudeStore){ try{ const r=await window.storage.get(k); return r ? r.value : null; }catch(e){} }
+    try{ return localStorage.getItem(k); }catch(e){ return null; }
+  },
+  async set(k,v){
+    if(hasClaudeStore){ try{ await window.storage.set(k,v); return; }catch(e){} }
+    try{ localStorage.setItem(k,v); }catch(e){}
+  },
+};
+const MEALS = ["Breakfast","Lunch","Dinner","Snacks"];
+
+/* ---------- state ---------- */
+let viewDate = new Date();
+let entries = [];          // entries for viewDate
+let settings = { target:null };
+let recents = [];          // [{name,brand,basis,base,serveLabel}]
+let selectedFood = null;   // food chosen in portion panel
+let selectedMeal = defaultMeal();
+
+function dayKey(d){ return "diary:"+d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function defaultMeal(){ const h=new Date().getHours(); if(h<11)return"Breakfast"; if(h<15)return"Lunch"; if(h<21)return"Dinner"; return"Snacks"; }
+function isSameDay(a,b){ return a.toDateString()===b.toDateString(); }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+/* ---------- load / save ---------- */
+async function loadAll(){
+  const s = await store.get("cal_settings"); if(s){ try{ settings = JSON.parse(s); }catch(e){} }
+  const r = await store.get("cal_recents"); if(r){ try{ recents = JSON.parse(r); }catch(e){} }
+  await loadDay();
+}
+async function loadDay(){
+  const raw = await store.get(dayKey(viewDate));
+  entries = raw ? (()=>{ try{return JSON.parse(raw);}catch(e){return[];} })() : [];
+  renderDate(); renderTotal(); renderMeals();
+}
+async function saveDay(){ await store.set(dayKey(viewDate), JSON.stringify(entries)); }
+async function saveRecents(){ await store.set("cal_recents", JSON.stringify(recents.slice(0,24))); }
+
+/* ---------- rendering ---------- */
+function renderDate(){
+  const today = new Date();
+  const yest = new Date(today); yest.setDate(today.getDate()-1);
+  const lbl = document.getElementById("datelabel");
+  let main;
+  if(isSameDay(viewDate,today)) main="Today";
+  else if(isSameDay(viewDate,yest)) main="Yesterday";
+  else main = viewDate.toLocaleDateString(undefined,{weekday:"short", day:"numeric"});
+  lbl.innerHTML = main + "<small>"+viewDate.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"})+"</small>";
+  document.getElementById("next").style.visibility = isSameDay(viewDate,today) ? "hidden":"visible";
+}
+function total(){ return entries.reduce((s,e)=>s+e.kcal,0); }
+function renderTotal(){
+  const t = total();
+  document.getElementById("totalNum").textContent = t.toLocaleString();
+  const bar=document.getElementById("bar"), bl=document.getElementById("barLabel");
+  if(settings.target && settings.target>0){
+    bar.classList.add("show"); bl.classList.add("show");
+    const pct = Math.min(100, Math.round(t/settings.target*100));
+    document.getElementById("barFill").style.width = pct+"%";
+    const left = settings.target - t;
+    document.getElementById("barLeft").textContent = Math.abs(left).toLocaleString();
+    bl.querySelector("span:last-child").innerHTML = left>=0
+      ? '<b>'+left.toLocaleString()+'</b> left of '+settings.target.toLocaleString()
+      : '<b style="color:var(--accent)">'+Math.abs(left).toLocaleString()+'</b> over '+settings.target.toLocaleString();
+  } else { bar.classList.remove("show"); bl.classList.remove("show"); }
+}
+function renderMeals(){
+  const wrap=document.getElementById("meals");
+  if(entries.length===0){
+    wrap.innerHTML='<div class="empty-day"><div class="big">Nothing logged yet</div><div>Tap “Add food” to start your diary for the day.</div></div>';
+    return;
+  }
+  wrap.innerHTML = MEALS.map(m=>{
+    const items = entries.filter(e=>e.meal===m);
+    if(items.length===0) return "";
+    const sum = items.reduce((s,e)=>s+e.kcal,0);
+    return '<div class="meal"><div class="meal-head"><div class="meal-name">'+m+'</div><div class="meal-sum">'+sum.toLocaleString()+' cal</div></div>'+
+      '<div class="items">'+items.map(e=>
+        '<div class="item"><div class="info"><div class="nm">'+esc(e.name)+'</div>'+(e.brand?'<div class="br">'+esc(e.brand)+'</div>':'')+'</div>'+
+        '<div class="kc">'+e.kcal.toLocaleString()+'</div>'+
+        '<button class="del" data-id="'+e.id+'" aria-label="Remove">✕</button></div>').join("")+
+      '</div></div>';
+  }).join("");
+  wrap.querySelectorAll(".del").forEach(b=>b.onclick=()=>removeEntry(b.dataset.id));
+}
+function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+async function removeEntry(id){ entries=entries.filter(e=>e.id!==id); await saveDay(); renderTotal(); renderMeals(); }
+
+async function addEntry(food){
+  entries.push({ id:uid(), name:food.name, brand:food.brand||"", kcal:food.kcal, meal:selectedMeal });
+  await saveDay(); renderTotal(); renderMeals();
+  // recents
+  if(food.recent){
+    recents = recents.filter(r=>!(r.name===food.recent.name && r.brand===food.recent.brand));
+    recents.unshift(food.recent); await saveRecents();
+  }
+  toast(food.kcal.toLocaleString()+" cal added to "+selectedMeal);
+}
+
+/* ---------- toast ---------- */
+let toastTimer;
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),1800); }
+
+/* ---------- date nav ---------- */
+document.getElementById("prev").onclick=()=>{ viewDate.setDate(viewDate.getDate()-1); loadDay(); };
+document.getElementById("next").onclick=()=>{ const t=new Date(); if(isSameDay(viewDate,t))return; viewDate.setDate(viewDate.getDate()+1); loadDay(); };
+
+/* ---------- sheet open/close ---------- */
+const scrim=document.getElementById("scrim"), sheet=document.getElementById("sheet"), settingsSheet=document.getElementById("settingsSheet");
+let scanner=null;
+function openSheet(){ selectedMeal=defaultMeal(); selectedFood=null; scrim.classList.add("open"); sheet.classList.add("open"); switchTab("search"); }
+async function closeSheet(){ sheet.classList.remove("open"); settingsSheet.classList.remove("open"); scrim.classList.remove("open"); await stopScanner(); }
+document.getElementById("addBtn").onclick=openSheet;
+document.getElementById("closeSheet").onclick=closeSheet;
+scrim.onclick=closeSheet;
+document.getElementById("settingsBtn").onclick=()=>{ document.getElementById("targetInput").value = settings.target||""; scrim.classList.add("open"); settingsSheet.classList.add("open"); };
+document.getElementById("closeSettings").onclick=closeSheet;
+
+/* ---------- settings ---------- */
+document.getElementById("saveTarget").onclick=async()=>{ const v=parseInt(document.getElementById("targetInput").value,10); settings.target = (v&&v>0)?v:null; await store.set("cal_settings",JSON.stringify(settings)); renderTotal(); closeSheet(); toast(settings.target?"Target set":"Target removed"); };
+document.getElementById("clearTarget").onclick=async()=>{ settings.target=null; document.getElementById("targetInput").value=""; await store.set("cal_settings",JSON.stringify(settings)); renderTotal(); closeSheet(); toast("Target removed"); };
+
+/* ---------- tabs ---------- */
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));
+async function switchTab(name){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));
+  await stopScanner();
+  selectedFood=null;
+  const body=document.getElementById("sheetBody");
+  if(name==="search") renderSearchTab(body);
+  else if(name==="scan") renderScanTab(body);
+  else renderQuickTab(body);
+}
+
+/* ---------- meal picker (shared) ---------- */
+function mealPickerHTML(){ return '<label class="label">Add to</label><div class="mealpick">'+MEALS.map(m=>'<button class="'+(m===selectedMeal?"on":"")+'" data-meal="'+m+'">'+m+'</button>').join("")+'</div>'; }
+function wireMealPicker(root){ root.querySelectorAll(".mealpick button").forEach(b=>b.onclick=()=>{ selectedMeal=b.dataset.meal; root.querySelectorAll(".mealpick button").forEach(x=>x.classList.toggle("on",x.dataset.meal===selectedMeal)); }); }
+
+/* ---------- SEARCH tab ---------- */
+function renderSearchTab(body){
+  body.innerHTML = '<label class="label">Search any food</label><input class="field" id="q" placeholder="e.g. greek yogurt, chicken breast…" autocomplete="off" />'+
+    '<div class="results" id="results"></div>';
+  const q=document.getElementById("q"), results=document.getElementById("results");
+  if(recents.length){
+    results.innerHTML='<label class="label" style="margin-left:0">Recent</label><div class="chips">'+
+      recents.slice(0,8).map((r,i)=>'<button class="chip" data-rec="'+i+'">'+esc(r.name)+'</button>').join("")+'</div>';
+    results.querySelectorAll(".chip").forEach(c=>c.onclick=()=>openPortion(recents[+c.dataset.rec]));
+  }
+  let timer;
+  q.oninput=()=>{ clearTimeout(timer); const term=q.value.trim(); if(term.length<2){ if(searchCtrl) searchCtrl.abort(); if(recents.length) renderSearchTab(body); else results.innerHTML=""; return;} timer=setTimeout(()=>runSearch(term,results),200); };
+  q.focus();
+}
+let searchCtrl=null;
+async function runSearch(term,results){
+  if(searchCtrl) searchCtrl.abort();          // cancel the previous keystroke's request
+  searchCtrl=new AbortController();
+  const sig=searchCtrl.signal;
+  results.innerHTML='<div class="hint"><span class="spin"></span></div>';
+  try{
+    // Search-a-licious: Open Food Facts' current full-text engine (the old search.pl is deprecated)
+    const url="https://search.openfoodfacts.org/search?q="+encodeURIComponent(term)+
+      "&page_size=25&fields=code,product_name,brands,nutriments,serving_size&langs=en";
+    const res=await fetch(url,{signal:sig});
+    if(!res.ok) throw new Error("status "+res.status);
+    const data=await res.json();
+    const list=data.hits||data.products||[];
+    const foods=list.map(parseProduct).filter(Boolean);
+    if(!foods.length){ results.innerHTML='<div class="hint">No matches found. Try another spelling, or use the <b>Quick</b> tab to enter it manually.</div>'; return; }
+    results.innerHTML=foods.map((f,i)=>resCard(f,i)).join("");
+    results.querySelectorAll(".res").forEach(el=>el.onclick=()=>openPortion(foods[+el.dataset.i]));
+  }catch(e){
+    if(e.name==="AbortError") return;          // a newer keystroke took over; ignore
+    results.innerHTML='<div class="hint">Couldn’t reach the food database from here. If you’re in the chat preview, the network is likely blocked — open the file in a real browser and search will work. The <b>Quick</b> tab works anywhere.</div>';
+  }
+}
+function resCard(f,i){
+  const per = f.basis==="serving" ? Math.round(f.base)+" / serving" : Math.round(f.base)+" / 100g";
+  return '<button class="res" data-i="'+i+'"><div class="info"><div class="nm">'+esc(f.name)+'</div>'+(f.brand?'<div class="meta">'+esc(f.brand)+'</div>':'')+'</div><div class="kc">'+Math.round(f.base)+'<small>'+(f.basis==="serving"?"per serving":"per 100g")+'</small></div></button>';
+}
+function kcalAt(n){ if(!n) return null; for(const k of ["energy-kcal_100g","energy_kcal_100g","energy-kcal_value","energy-kcal"]){ if(n[k]!=null && isFinite(+n[k])) return +n[k]; } return null; }
+function kcalServe(n){ if(!n) return null; for(const k of ["energy-kcal_serving","energy_kcal_serving"]){ if(n[k]!=null && isFinite(+n[k])) return +n[k]; } return null; }
+function parseProduct(p){
+  const name=p.product_name||p.product_name_en;
+  if(!name) return null;
+  const n=p.nutriments||p||{};            // engine may nest nutriments or flatten them
+  let basis,base,serveLabel="";
+  const ks=kcalServe(n), k100=kcalAt(n);
+  if(ks!=null && p.serving_size){ basis="serving"; base=ks; serveLabel=p.serving_size; }
+  else if(k100!=null){ basis="per100"; base=k100; }
+  else return null;
+  if(!base || base<=0 || !isFinite(base)) return null;
+  return { name:String(name).slice(0,80), brand:(p.brands||"").split(",")[0].trim(), basis, base:Math.round(base), serveLabel };
+}
+
+/* ---------- SCAN tab ---------- */
+function renderScanTab(body){
+  body.innerHTML =
+    '<div id="scanArea"><div id="reader"></div><button class="primary" id="startCam">Open camera to scan</button></div>'+
+    '<label class="label">Or enter the barcode number</label>'+
+    '<div class="row"><input class="field" id="barcode" inputmode="numeric" placeholder="e.g. 737628064502" /><button class="primary" id="lookupBtn" style="margin-top:0; width:auto; padding:14px 18px;">Find</button></div>'+
+    '<div class="results" id="scanResult"></div>';
+  document.getElementById("startCam").onclick=startScanner;
+  document.getElementById("lookupBtn").onclick=()=>{ const c=document.getElementById("barcode").value.trim(); if(c) lookupBarcode(c); };
+  document.getElementById("barcode").addEventListener("keydown",e=>{ if(e.key==="Enter"){ const c=e.target.value.trim(); if(c) lookupBarcode(c);} });
+}
+async function startScanner(){
+  const out=document.getElementById("scanResult");
+  if(typeof Html5Qrcode==="undefined"){ out.innerHTML='<div class="hint">Scanner library couldn’t load. Type the barcode number above instead.</div>'; return; }
+  try{
+    document.getElementById("startCam").style.display="none";
+    scanner=new Html5Qrcode("reader",{ formatsToSupport:[ Html5QrcodeSupportedFormats.EAN_13, Html5QrcodeSupportedFormats.EAN_8, Html5QrcodeSupportedFormats.UPC_A, Html5QrcodeSupportedFormats.UPC_E ], verbose:false });
+    await scanner.start({ facingMode:"environment" }, { fps:10, qrbox:{width:240,height:160} },
+      async(code)=>{ await stopScanner(); document.getElementById("barcode").value=code; lookupBarcode(code); },
+      ()=>{} );
+  }catch(e){
+    out.innerHTML='<div class="hint">Camera isn’t available here (permission blocked or no camera). Type the barcode number above — lookup works the same way.</div>';
+    const btn=document.getElementById("startCam"); if(btn) btn.style.display="";
+  }
+}
+async function stopScanner(){ if(scanner){ try{ await scanner.stop(); scanner.clear(); }catch(e){} scanner=null; } }
+async function lookupBarcode(code){
+  const out=document.getElementById("scanResult"); out.innerHTML='<div class="hint"><span class="spin"></span></div>';
+  try{
+    const res=await fetch("https://world.openfoodfacts.org/api/v2/product/"+encodeURIComponent(code)+".json?fields=code,product_name,brands,nutriments,serving_size");
+    const data=await res.json();
+    if(data.product){
+      const f=parseProduct(data.product);
+      if(!f){ out.innerHTML='<div class="hint">Found the product but it has no calorie data. Use the <b>Quick</b> tab to add it by hand.</div>'; return; }
+      out.innerHTML=''; openPortion(f, out);
+    } else { out.innerHTML='<div class="hint">No product found for that barcode. Try the <b>Search</b> or <b>Quick</b> tab.</div>'; }
+  }catch(e){ out.innerHTML='<div class="hint">Couldn’t reach the food database (no network here). Use the <b>Quick</b> tab to log it manually.</div>'; }
+}
+
+/* ---------- QUICK tab ---------- */
+function renderQuickTab(body){
+  body.innerHTML =
+    (recents.length? '<label class="label">Recent</label><div class="chips" id="recChips">'+recents.slice(0,10).map((r,i)=>'<button class="chip" data-i="'+i+'">'+esc(r.name)+'<b>'+Math.round(r.base)+(r.basis==="serving"?"":"/100g")+'</b></button>').join("")+'</div>':'')+
+    '<label class="label">Add manually</label>'+
+    '<input class="field" id="mName" placeholder="Food name" autocomplete="off" />'+
+    '<div class="row" style="margin-top:10px;"><input class="field" id="mCal" inputmode="numeric" placeholder="Calories" /></div>'+
+    mealPickerHTML()+
+    '<button class="primary" id="quickAdd">Add to diary</button>';
+  wireMealPicker(body);
+  const rc=document.getElementById("recChips");
+  if(rc) rc.querySelectorAll(".chip").forEach(c=>c.onclick=()=>openPortion(recents[+c.dataset.i]));
+  document.getElementById("quickAdd").onclick=async()=>{
+    const name=document.getElementById("mName").value.trim();
+    const cal=parseInt(document.getElementById("mCal").value,10);
+    if(!name){ toast("Add a name first"); return; }
+    if(!cal||cal<=0){ toast("Add calories"); return; }
+    await addEntry({ name, kcal:cal });
+    closeSheet();
+  };
+}
+
+/* ---------- portion panel ---------- */
+function openPortion(food, container){
+  selectedFood=food;
+  const body = container || document.getElementById("sheetBody");
+  const isServing = food.basis==="serving";
+  const defQty = isServing ? 1 : 100;
+  const unit = isServing ? (food.serveLabel? "× serving":"servings") : "grams";
+  body.innerHTML =
+    '<div class="portion"><div class="pnm">'+esc(food.name)+'</div>'+(food.brand?'<div class="pbr">'+esc(food.brand)+'</div>':'')+
+    '<label class="label" style="margin-left:0">'+(isServing?"Servings":"Amount (grams)")+(food.serveLabel?' · serving = '+esc(food.serveLabel):'')+'</label>'+
+    '<input class="field" id="qty" inputmode="decimal" value="'+defQty+'" />'+
+    '<div class="calc"><span class="v" id="calcVal">0</span><span class="u">cal</span></div>'+
+    mealPickerHTML()+
+    '<button class="primary" id="confirmAdd">Add to diary</button>'+
+    '<button class="ghost" id="backBtn">Back</button></div>';
+  const qty=document.getElementById("qty");
+  function recompute(){ const q=parseFloat(qty.value)||0; const kcal=Math.round(isServing? food.base*q : food.base*q/100); document.getElementById("calcVal").textContent=kcal.toLocaleString(); return kcal; }
+  qty.oninput=recompute; recompute();
+  wireMealPicker(body);
+  document.getElementById("confirmAdd").onclick=async()=>{
+    const kcal=recompute(); if(kcal<=0){ toast("Enter an amount"); return; }
+    await addEntry({ name:food.name, brand:food.brand, kcal, recent:{ name:food.name, brand:food.brand||"", basis:food.basis, base:food.base, serveLabel:food.serveLabel||"" } });
+    closeSheet();
+  };
+  document.getElementById("backBtn").onclick=()=>switchTab(document.querySelector(".tab.active").dataset.tab);
+}
+
+/* ---------- boot ---------- */
+loadAll();
+</script>
+</body>
+</html>
